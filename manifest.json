@@ -1,0 +1,52 @@
+{
+  "name": "Anime Memory Game",
+  "short_name": "AnimeMemory",
+  "description": "A fun and interactive anime-themed memory game. Match anime characters and test your memory skills!",
+  "start_url": "/Anime-Memory/index.html",
+  "scope": "/Anime-Memory/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#e91e63",
+  "lang": "en",
+  "dir": "ltr",
+  "id": "com.pulsebomb.animememorygame",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/jCWXvg6J/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/8JYbNMG5/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://i.postimg.cc/QKWJtCNq/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play Game",
+      "short_name": "Play",
+      "description": "Start a new memory challenge",
+      "url": "/Anime-Memory/index.html",
+      "icons": [
+        {
+          "src": "https://i.postimg.cc/jCWXvg6J/android-chrome-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred"
+}

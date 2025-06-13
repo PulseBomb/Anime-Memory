@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Memory Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="language-switcher">
+        <button id="lang-en" class="active">English</button>
+        <button id="lang-ar">العربية</button>
+    </div>
+
+    <div class="game-container">
+        <h1 data-i18n="gameTitle">Memory Game <span class="anime-text">Epic Challenge</span></h1>
+
+        <div id="game-start-screen" class="game-screen active">
+            <h2 data-i18n="welcomeMessage">Welcome to the World of Memory!</h2>
+            <button id="startGameBtn" class="anime-btn" data-i18n="startGameBtn"><i class="fas fa-play-circle"></i> Start Your Journey!</button>
+            <button id="viewRankBtn" class="anime-btn" data-i18n="viewRankBtn"><i class="fas fa-medal"></i> View Hall of Fame</button>
+            <button id="resetGameBtn" class="anime-btn anime-btn-red" data-i18n="resetGameBtn"><i class="fas fa-undo-alt"></i> Reset Full Game</button>
+            <div class="best-score">
+                <h3 data-i18n="overallBestScore">Overall Best Score: <span id="bestScoreDisplay">0</span> Points</h3>
+            </div>
+            <div class="sound-controls">
+                <label for="bgMusicToggle" data-i18n="backgroundMusicLabel"><i class="fas fa-music"></i> Background Music: <input type="checkbox" id="bgMusicToggle" checked></label>
+                <input type="range" id="bgMusicVolume" min="0" max="1" step="0.1" value="0.5">
+            </div>
+        </div>
+
+        <div id="hall-of-fame-screen" class="game-screen">
+            <h2 data-i18n="hallOfFameTitle"><i class="fas fa-trophy"></i> Hall of Fame <i class="fas fa-trophy"></i></h2>
+            <div class="hall-of-fame-list-container">
+                <ul id="topPlayersList">
+                    <li data-i18n="loadingPlayers">Loading top players...</li>
+                </ul>
+            </div>
+            <button id="backToStartFromRankBtn" class="anime-btn control-btn" data-i18n="backToMainMenuBtn"><i class="fas fa-home"></i> Back to Main Menu</button>
+        </div>
+
+        <div id="game-play-screen" class="game-screen">
+            <div class="game-info">
+                <div class="info-item">
+                    <span data-i18n="currentLevelLabel">Level:</span> <span id="currentLevel">1</span>
+                </div>
+                <div class="info-item">
+                    <span data-i18n="currentScoreLabel">Score:</span> <span id="currentScore">0</span>
+                </div>
+                <div class="info-item">
+                    <span data-i18n="attemptsLabel">Attempts:</span> <span id="counter">0</span>
+                </div>
+                <div class="info-item">
+                    <span data-i18n="timerLabel">Time:</span> <span id="timer">0s</span>
+                </div>
+            </div>
+            <div class="hint-section">
+                <button id="hintBtn" class="anime-btn hint-btn" data-i18n="hintBtn"><i class="fas fa-lightbulb"></i> Hint (<span id="hintsRemaining">3</span>)</button>
+                <div class="hint-bar">
+                    <div class="hint-fill"></div>
+                </div>
+            </div>
+            <div id="boxcard" class="memory-grid"></div>
+        </div>
+
+        <div id="game-end-screen" class="game-screen">
+            <h2 data-i18n="gameEndTitle">Your Journey Ends Here!</h2>
+            <p data-i18n="levelCompletionMessage">Congratulations! You completed the level in <span id="finalAttempts">0</span> attempts and <span id="finalTime">0s</span>.</p>
+            <p class="final-score-display" data-i18n="levelScoreLabel">Level Score: <span id="levelScore">0</span></p>
+            <p id="newRecordMsg" class="hidden" data-i18n="newRecordMsg"><i class="fas fa-trophy"></i> New High Score!</p>
+            <p id="totalScoreMsg" data-i18n="totalGameScoreLabel">Total Game Score: <span id="totalGameScore">0</span></p>
+            <button id="nextLevelBtn" class="anime-btn" data-i18n="nextLevelBtn"><i class="fas fa-arrow-alt-circle-right"></i> Next Level</button>
+            <button id="playAgainBtn" class="anime-btn" data-i18n="playAgainBtn"><i class="fas fa-gamepad"></i> Play Again</button>
+            <button id="backToMenuBtn" class="anime-btn" data-i18n="backToMainMenuBtn"><i class="fas fa-home"></i> Back to Main Menu</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" src="sounds/background_music.mp3" loop preload="auto"></audio>
+    <audio id="flipSound" src="sounds/flip.mp3" preload="auto"></audio>
+    <audio id="matchSound" src="sounds/match.mp3" preload="auto"></audio>
+    <audio id="nomatchSound" src="sounds/nomatch.mp3" preload="auto"></audio>
+    <audio id="winSound" src="sounds/win.mp3" preload="auto"></audio>
+    <audio id="hintSound" src="sounds/hint.mp3" preload="auto"></audio>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDcPtmVLJW7uyfHijoYSkE555aYRdmJQzo",
+        authDomain: "anime-d0ef8.firebaseapp.com",
+        databaseURL: "https://anime-d0ef8-default-rtdb.firebaseio.com",
+        projectId: "anime-d0ef8",
+        storageBucket: "anime-d0ef8.firebaseapp.com",
+        messagingSenderId: "270178269874",
+        appId: "1:270178269874:web:caaf6878e35bf84b26a7ab",
+        measurementId: "G-SGH2WYQWZP"
+      };
+
+      // Initialize Firebase (using the compatibility layer)
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

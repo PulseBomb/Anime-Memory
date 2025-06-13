@@ -1,0 +1,545 @@
+/* Anime Style Base */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Caveat:wght@400;700&display=swap');
+
+/* Basic Box Sizing for consistency */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Caveat', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right bottom, #4b6cb7, #182848);
+    color: #e0f2f7;
+    direction: rtl; /* Right-to-left for Arabic */
+    text-align: right;
+    overflow-x: hidden; /* Prevent horizontal scroll bar from appearing */
+    padding: 10px; /* Added padding for small screens to prevent content sticking to edges */
+}
+
+.game-container {
+    background-color: rgba(23, 32, 42, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    max-width: 95%; /* Make it more responsive */
+    width: 900px; /* Base width */
+    border: 3px solid #6b9ecb;
+    position: relative;
+    overflow: hidden; /* For any internal overflows - keep if intentional */
+    margin: 20px auto; /* Center the container with vertical margin */
+}
+
+h1 {
+    color: #ffe082;
+    margin-bottom: 25px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5em; /* Base font size */
+    text-shadow: 0 0 10px rgba(255, 224, 130, 0.7);
+    word-break: break-word; /* Prevent long words from overflowing */
+}
+
+.anime-text {
+    color: #ff5733;
+    text-shadow: 0 0 8px rgba(255, 87, 51, 0.7);
+}
+
+.game-screen {
+    display: none;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.game-screen.active {
+    display: block;
+}
+/* Language Switcher Styles */
+.language-switcher {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    gap: 5px;
+}
+
+.language-switcher button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.language-switcher button:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.language-switcher button.active {
+    background-color: #007bff; /* Highlight active language */
+    opacity: 1;
+    font-weight: bold;
+}
+
+/* RTL support for Arabic */
+html[lang="ar"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+html[lang="ar"] .language-switcher {
+    right: auto;
+    left: 10px;
+}
+
+html[lang="ar"] .game-info,
+html[lang="ar"] .hint-section,
+html[lang="ar"] .best-score,
+html[lang="ar"] .sound-controls,
+html[lang="ar"] .hall-of-fame-list-container {
+    text-align: right; /* Adjust alignment for RTL */
+}
+
+/* Optional: adjust specific elements for RTL if needed */
+html[lang="ar"] .game-info .info-item {
+    padding-right: 0;
+    padding-left: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Buttons --- */
+.anime-btn {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    margin: 10px;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    border-bottom: 3px solid #c0392b;
+    white-space: nowrap; /* Prevent button text from wrapping if possible */
+}
+
+.anime-btn:hover {
+    background-color: #e74c3c;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    border-bottom: 0px;
+}
+
+.anime-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-bottom: 3px solid #c0392b;
+}
+
+/* --- Start Screen Styles --- */
+#game-start-screen h2 {
+    color: #e0f2f7;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+.best-score {
+    margin-top: 30px;
+    font-size: 1.3em;
+    color: #a9cce3;
+}
+
+.sound-controls {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.sound-controls label {
+    font-size: 1.1em;
+    color: #e0f2f7;
+    cursor: pointer;
+}
+
+.sound-controls input[type="range"] {
+    width: 150px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: #566573;
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+.sound-controls input[type="range"]:hover {
+    opacity: 1;
+}
+
+.sound-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff5733;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 87, 51, 0.7);
+}
+
+.sound-controls input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff5733;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 87, 51, 0.7);
+}
+
+/* --- Game Play Screen Styles --- */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 15px 0;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9em;
+    flex-wrap: wrap; /* Allow info items to wrap */
+    gap: 10px; /* Space between wrapped items */
+}
+
+.info-item {
+    font-weight: bold;
+    color: #ffe082;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    min-width: 80px; /* Ensure a minimum width for each item */
+}
+
+.hint-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Allow hint elements to wrap */
+}
+
+.hint-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 0;
+    min-width: 100px; /* Ensure button has a minimum width */
+}
+
+.hint-bar {
+    width: 150px;
+    height: 15px;
+    background-color: #555;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #aaa;
+    flex-grow: 1; /* Allow hint bar to grow and shrink */
+    max-width: 200px; /* Limit max width for larger screens */
+}
+
+.hint-fill {
+    height: 100%;
+    background-color: #33aaff;
+    width: 100%;
+    transition: width 0.3s ease-out;
+}
+
+.memory-grid {
+    display: grid;
+    gap: 10px;
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+    /* THIS IS THE KEY FOR RESPONSIVE GRID */
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Adjust minmax for card size */
+    max-width: 100%; /* Ensure grid doesn't exceed its parent */
+}
+
+.card {
+    width: 100%; /* Take full available width within its grid cell */
+    aspect-ratio: 1 / 1; /* Keep cards square even if width changes */
+    max-width: 90px; /* Max size for desktop, will scale down on mobile */
+    height: auto; /* Height will adjust based on aspect-ratio */
+
+    background: #4a148c;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    border: 2px solid #8e24aa;
+    transform-style: preserve-3d; /* Correctly enables 3D transforms for children */
+    /* تم إزالة backface-visibility من هنا */
+}
+
+.card:hover:not(.flipped):not(.matched) {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.card img {
+    /* Opacity managed by JS, but ensure initial state is visually hidden */
+    opacity: 0; /* JS ستقوم بتغيير هذا إلى 1 */
+    transition: opacity 0.4s ease; /* فقط انتقال الشفافية */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This makes the image fill the card */
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* الصورة تبدأ مستقيمة ومركزة، ولا تحتاج دوران خاص بها */
+    transform: none; /* Removed translate for full fill */
+    /* backface-visibility: hidden; تم إزالة هذا من هنا لأن الصورة لا تدور بشكل منفصل عن البطاقة */
+}
+
+
+.card.flipped {
+    background: #a7ffeb;
+    transform: rotateY(180deg); /* البطاقة كلها تدور 180 درجة */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card.flipped img {
+    opacity: 1; /* JS ستقوم بتغيير هذا */
+    /* الصورة تبقى مستقيمة ضمن البطاقة الدائرة، لا تحتاج دوران إضافي هنا */
+    transform: none; /* Removed translate for full fill */
+}
+
+.card.matched {
+    opacity: 0;
+    pointer-events: none; /* Disable clicks on matched cards */
+    transition: opacity 0.6s ease-out 0.5s; /* Delay fade-out for matched cards */
+    background: #4CAF50;
+}
+
+/* --- End Screen Styles --- */
+#game-end-screen h2 {
+    color: #e0f2f7;
+    margin-bottom: 25px;
+    font-size: 2em;
+    text-shadow: 0 0 10px rgba(224, 242, 247, 0.7);
+}
+
+#game-end-screen p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #a9cce3;
+}
+
+.final-score-display {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffe082;
+    margin-top: 20px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+#newRecordMsg {
+    color: #27ae60;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite;
+}
+
+#totalScoreMsg {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #33aaff;
+    margin-top: 15px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* For smaller screens (e.g., tablets and large phones) */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 20px; /* Reduce padding */
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 2em; /* Smaller title */
+        margin-bottom: 20px;
+    }
+
+    .anime-btn {
+        padding: 12px 25px;
+        font-size: 1.1em;
+        margin: 8px;
+    }
+
+    #game-start-screen h2 {
+        font-size: 1.6em;
+    }
+
+    .best-score, #totalScoreMsg {
+        font-size: 1.1em;
+    }
+
+    .game-info {
+        font-size: 0.8em;
+        padding: 10px 0;
+    }
+
+    .info-item {
+        min-width: 60px; /* Adjust min width for info items */
+    }
+
+    .hint-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    /* Adjust memory grid for smaller cards */
+    .memory-grid {
+        gap: 8px; /* Slightly less gap */
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* Min card size */
+    }
+
+    .card {
+        max-width: 80px; /* Max size for cards on tablet */
+    }
+
+    #game-end-screen h2 {
+        font-size: 1.8em;
+    }
+
+    #game-end-screen p {
+        font-size: 1em;
+    }
+
+    .final-score-display {
+        font-size: 1.3em;
+    }
+}
+
+/* For very small screens (e.g., mobile phones) */
+@media (max-width: 480px) {
+    body {
+        padding: 5px; /* Even less padding on the body */
+    }
+
+    .game-container {
+        padding: 15px;
+        border-radius: 10px;
+        max-width: 98%; /* Allow container to be almost full width */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Smaller title for mobile */
+        margin-bottom: 15px;
+    }
+
+    .anime-btn {
+        padding: 10px 20px;
+        font-size: 1em;
+        margin: 5px;
+        width: calc(50% - 10px); /* Make buttons take up half width, with gap */
+        white-space: normal; /* Allow button text to wrap if needed */
+    }
+
+    #game-start-screen h2 {
+        font-size: 1.3em;
+        margin-bottom: 20px;
+    }
+
+    .sound-controls {
+        flex-direction: column; /* Stack sound controls vertically */
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .sound-controls input[type="range"] {
+        width: 100%; /* Full width for range slider */
+        max-width: 150px; /* Keep it from becoming too wide */
+    }
+
+    .game-info {
+        font-size: 0.7em;
+        flex-direction: column; /* Stack info items vertically */
+        align-items: center; /* Center them when stacked */
+        gap: 5px;
+        padding: 8px 0;
+    }
+
+    .hint-section {
+        flex-direction: column; /* Stack hint elements vertically */
+        gap: 10px;
+    }
+
+    .hint-btn {
+        width: 80%; /* Make hint button wider */
+        max-width: 200px;
+    }
+
+    .hint-bar {
+        width: 90%; /* Make hint bar wider */
+        max-width: 250px;
+    }
+
+    /* Adjust memory grid for very small cards on mobile */
+    .memory-grid {
+        gap: 5px; /* Even less gap */
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Smallest card size */
+    }
+
+    .card {
+        max-width: 60px; /* Max size for cards on smallest mobile */
+        border-radius: 5px; /* Slightly less rounded corners */
+    }
+
+    #game-end-screen h2 {
+        font-size: 1.5em;
+    }
+
+    #newRecordMsg {
+        font-size: 1.2em;
+    }
+}
